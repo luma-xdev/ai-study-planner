@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="AI Study Planner by Luma — Create personalized study plans, track progress, and stay focused."
+    >
+
+    <title>AI Study Planner — Luma</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         BACKGROUND
+    ========================================== -->
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                LP
+            </div>
+
+            <div>
+                <h1>StudyPilot</h1>
+                <span>AI Study Planner by Luma</span>
+            </div>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <div class="today-badge">
+                <span class="status-dot"></span>
+                Study Mode
+            </div>
+
+            <button
+                id="themeToggle"
+                class="icon-button"
+                type="button"
+                aria-label="Toggle theme"
+            >
+                ◐
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="container">
+
+
+        <!-- =====================================
+             HERO
+        ====================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    SMART PRODUCTIVITY TOOL
+                </span>
+
+                <h2>
+                    Plan smarter.
+                    <span>Study better.</span>
+                </h2>
+
+                <p>
+                    Create a personalized study plan based on
+                    your subjects, exam dates, priorities and
+                    available study time.
+                </p>
+
+            </div>
+
+
+            <div class="hero-card">
+
+                <div class="ai-icon">
+                    ✦
+                </div>
+
+                <div>
+                    <strong>
+                        Smart Planning
+                    </strong>
+
+                    <p>
+                        Your schedule adapts to your priorities.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             DASHBOARD STATS
+        ====================================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <span>Subjects</span>
+
+                <strong id="subjectCount">
+                    0
+                </strong>
+
+                <small>
+                    Added to planner
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>Study Hours</span>
+
+                <strong id="totalHours">
+                    0h
+                </strong>
+
+                <small>
+                    Planned per week
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>Tasks</span>
+
+                <strong id="taskCount">
+                    0
+                </strong>
+
+                <small>
+                    Generated tasks
+                </small>
+
+            </div>
+
+
+            <div class="stat-card progress-stat">
+
+                <span>Progress</span>
+
+                <strong id="progressPercent">
+                    0%
+                </strong>
+
+                <div class="mini-progress">
+                    <div
+                        id="miniProgressBar"
+                        class="mini-progress-fill"
+                    ></div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PLANNER WORKSPACE
+        ====================================== -->
+
+        <section class="workspace">
+
+
+            <!-- =================================
+                 LEFT PANEL
+            ================================== -->
+
+            <div class="planner-panel">
+
+
+                <!-- PLAN SETTINGS -->
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            STEP 01
+                        </span>
+
+                        <h3>
+                            Your Study Goals
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="input-group">
+
+                        <label for="studentName">
+                            Your Name
+                        </label>
+
+                        <input
+                            id="studentName"
+                            type="text"
+                            placeholder="e.g. Alex"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="dailyHours">
+                            Daily Study Hours
+                        </label>
+
+                        <input
+                            id="dailyHours"
+                            type="number"
+                            min="1"
+                            max="12"
+                            value="2"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group full">
+
+                        <label for="examDate">
+                            Main Exam Date
+                        </label>
+
+                        <input
+                            id="examDate"
+                            type="date"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBJECTS -->
+
+                <div class="subjects-section">
+
+                    <div class="section-heading-row">
+
+                        <div>
+
+                            <span class="section-label">
+                                STEP 02
+                            </span>
+
+                            <h3>
+                                Add Subjects
+                            </h3>
+
+                        </div>
+
+                        <button
+                            id="addSubjectButton"
+                            type="button"
+                            class="secondary-button"
+                        >
+                            + Add Subject
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="subjectsContainer"
+                        class="subjects-container"
+                    >
+
+                        <div class="subject-row">
+
+                            <input
+                                type="text"
+                                class="subject-name"
+                                placeholder="Subject name"
+                            >
+
+                            <select
+                                class="subject-priority"
+                            >
+                                <option value="high">
+                                    High Priority
+                                </option>
+
+                                <option
+                                    value="medium"
+                                    selected
+                                >
+                                    Medium Priority
+                                </option>
+
+                                <option value="low">
+                                    Low Priority
+                                </option>
+                            </select>
+
+
+                            <select
+                                class="subject-difficulty"
+                            >
+
+                                <option value="hard">
+                                    Hard
+                                </option>
+
+                                <option
+                                    value="medium"
+                                    selected
+                                >
+                                    Medium
+                                </option>
+
+                                <option value="easy">
+                                    Easy
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                type="button"
+                                class="remove-subject"
+                                aria-label="Remove subject"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GENERATE -->
+
+                <button
+                    id="generatePlanButton"
+                    type="button"
+                    class="generate-button"
+                >
+
+                    <span class="generate-icon">
+                        ✦
+                    </span>
+
+                    Generate Smart Study Plan
+
+                </button>
+
+
+                <!-- QUICK SETTINGS -->
+
+                <div class="quick-settings">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                STEP 03
+                            </span>
+
+                            <h3>
+                                Focus Settings
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="focus-options">
+
+                        <button
+                            type="button"
+                            class="focus-option active"
+                            data-focus="balanced"
+                        >
+                            <strong>
+                                Balanced
+                            </strong>
+
+                            <span>
+                                Even distribution
+                            </span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="focus-option"
+                            data-focus="exam"
+                        >
+                            <strong>
+                                Exam Focus
+                            </strong>
+
+                            <span>
+                                Prioritize urgent topics
+                            </span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="focus-option"
+                            data-focus="weak"
+                        >
+                            <strong>
+                                Weak Subjects
+                            </strong>
+
+                            <span>
+                                More time for difficult topics
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 RIGHT PANEL
+            ================================== -->
+
+            <div class="plan-panel">
+
+
+                <div class="plan-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            YOUR PLAN
+                        </span>
+
+                        <h3 id="planTitle">
+                            Your Study Plan
+                        </h3>
+
+                        <p id="planSubtitle">
+                            Add your subjects and generate a plan.
+                        </p>
+
+                    </div>
+
+
+                    <div class="plan-actions">
+
+                        <button
+                            id="resetPlanButton"
+                            type="button"
+                            class="icon-button"
+                            title="Reset plan"
+                        >
+                            ↻
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AI MESSAGE -->
+
+                <div
+                    id="aiMessage"
+                    class="ai-message"
+                >
+
+                    <div class="ai-message-icon">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Ready to plan
+                        </strong>
+
+                        <p>
+                            Add your subjects and let StudyPilot
+                            organize your study time.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DAILY PLAN -->
+
+                <div
+                    id="planContainer"
+                    class="plan-container"
+                >
+
+                    <div class="empty-plan">
+
+                        <div class="empty-icon">
+                            ✦
+                        </div>
+
+                        <h4>
+                            No study plan yet
+                        </h4>
+
+                        <p>
+                            Your personalized schedule will
+                            appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROGRESS -->
+
+                <div class="progress-section">
+
+                    <div class="progress-header">
+
+                        <div>
+
+                            <span>
+                                Overall Progress
+                            </span>
+
+                            <strong
+                                id="overallProgress"
+                            >
+                                0%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            id="progressBar"
+                            class="progress-fill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- POMODORO -->
+
+                <div class="focus-card">
+
+                    <div>
+
+                        <span class="section-label">
+                            FOCUS TIMER
+                        </span>
+
+                        <h3>
+                            Deep Focus
+                        </h3>
+
+                    </div>
+
+
+                    <div
+                        id="timerDisplay"
+                        class="timer-display"
+                    >
+                        25:00
+                    </div>
+
+
+                    <div class="timer-actions">
+
+                        <button
+                            id="timerStart"
+                            type="button"
+                            class="primary-button"
+                        >
+                            Start
+                        </button>
+
+                        <button
+                            id="timerReset"
+                            type="button"
+                            class="ghost-button"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer>
+
+            <p>
+                StudyPilot — AI Study Planner by
+                <strong>Luma</strong>
+            </p>
+
+            <span>
+                Plan smarter. Study better.
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+                          </html>
