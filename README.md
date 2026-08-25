@@ -7,6 +7,13 @@ StudyPilot is a modern, responsive AI-style study planning web application desig
 The application combines a clean dashboard interface with smart JavaScript-based planning logic to create a practical study experience without requiring external libraries or a backend.
 
 ---
+## 🌐 Live Demo
+
+The project can be deployed using GitHub Pages.
+
+After deployment:
+
+https://luma-xdev.github.io/ai-study-planner/
 
 ## ✨ Features
 
