@@ -4,7 +4,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-
     /* =========================================
        ELEMENTS
     ========================================== */
@@ -25,94 +24,58 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("addSubjectButton");
 
     const generatePlanButton =
-        document.getElementById(
-            "generatePlanButton"
-        );
+        document.getElementById("generatePlanButton");
 
     const resetPlanButton =
-        document.getElementById(
-            "resetPlanButton"
-        );
+        document.getElementById("resetPlanButton");
 
     const themeToggle =
-        document.getElementById(
-            "themeToggle"
-        );
+        document.getElementById("themeToggle");
 
     const planContainer =
-        document.getElementById(
-            "planContainer"
-        );
+        document.getElementById("planContainer");
 
     const planTitle =
-        document.getElementById(
-            "planTitle"
-        );
+        document.getElementById("planTitle");
 
     const planSubtitle =
-        document.getElementById(
-            "planSubtitle"
-        );
+        document.getElementById("planSubtitle");
 
     const aiMessage =
-        document.getElementById(
-            "aiMessage"
-        );
+        document.getElementById("aiMessage");
 
     const subjectCount =
-        document.getElementById(
-            "subjectCount"
-        );
+        document.getElementById("subjectCount");
 
     const totalHours =
-        document.getElementById(
-            "totalHours"
-        );
+        document.getElementById("totalHours");
 
     const taskCount =
-        document.getElementById(
-            "taskCount"
-        );
+        document.getElementById("taskCount");
 
     const progressPercent =
-        document.getElementById(
-            "progressPercent"
-        );
+        document.getElementById("progressPercent");
 
     const miniProgressBar =
-        document.getElementById(
-            "miniProgressBar"
-        );
+        document.getElementById("miniProgressBar");
 
     const overallProgress =
-        document.getElementById(
-            "overallProgress"
-        );
+        document.getElementById("overallProgress");
 
     const progressBar =
-        document.getElementById(
-            "progressBar"
-        );
+        document.getElementById("progressBar");
 
     const timerDisplay =
-        document.getElementById(
-            "timerDisplay"
-        );
+        document.getElementById("timerDisplay");
 
     const timerStart =
-        document.getElementById(
-            "timerStart"
-        );
+        document.getElementById("timerStart");
 
     const timerReset =
-        document.getElementById(
-            "timerReset"
-        );
+        document.getElementById("timerReset");
 
     const focusOptions =
-        document.querySelectorAll(
-            ".focus-option"
-        );
+        document.querySelectorAll(".focus-option");
 
 
     /* =========================================
@@ -132,20 +95,16 @@ document.addEventListener("DOMContentLoaded", () => {
        DEFAULT EXAM DATE
     ========================================== */
 
-    const today =
-        new Date();
+    const today = new Date();
 
-    const examDefault =
-        new Date(today);
+    const examDefault = new Date(today);
 
     examDefault.setDate(
         examDefault.getDate() + 30
     );
 
     examDate.value =
-        examDefault
-            .toISOString()
-            .split("T")[0];
+        examDefault.toISOString().split("T")[0];
 
 
     /* =========================================
@@ -157,8 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const row =
             document.createElement("div");
 
-        row.className =
-            "subject-row";
+        row.className = "subject-row";
 
         row.innerHTML = `
 
@@ -168,18 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 placeholder="Subject name"
             >
 
-            <select
-                class="subject-priority"
-            >
+            <select class="subject-priority">
 
                 <option value="high">
                     High Priority
                 </option>
 
-                <option
-                    value="medium"
-                    selected
-                >
+                <option value="medium" selected>
                     Medium Priority
                 </option>
 
@@ -189,18 +142,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </select>
 
-            <select
-                class="subject-difficulty"
-            >
+            <select class="subject-difficulty">
 
                 <option value="hard">
                     Hard
                 </option>
 
-                <option
-                    value="medium"
-                    selected
-                >
+                <option value="medium" selected>
                     Medium
                 </option>
 
@@ -219,22 +167,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         `;
 
-
         subjectsContainer.appendChild(row);
 
         attachSubjectEvents(row);
 
         updateStats();
-
     }
 
 
     function attachSubjectEvents(row) {
 
         const inputs =
-            row.querySelectorAll(
-                "input, select"
-            );
+            row.querySelectorAll("input, select");
 
         inputs.forEach(input => {
 
@@ -252,9 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const removeButton =
-            row.querySelector(
-                ".remove-subject"
-            );
+            row.querySelector(".remove-subject");
 
 
         removeButton.addEventListener(
@@ -288,9 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document
         .querySelectorAll(".subject-row")
-        .forEach(
-            attachSubjectEvents
-        );
+        .forEach(attachSubjectEvents);
 
 
     addSubjectButton.addEventListener(
@@ -358,9 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const hours =
             Math.max(
-                Number(
-                    dailyHours.value
-                ) || 0,
+                Number(dailyHours.value) || 0,
                 0
             );
 
@@ -383,57 +321,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       SUBJECT SCORE
+       FOCUS MODE WEIGHT
     ========================================== */
 
-    function getSubjectScore(subject) {
-
-        let score = 0;
-
-
-        if (subject.priority === "high") {
-            score += 3;
-        }
-
-        if (subject.priority === "medium") {
-            score += 2;
-        }
-
-        if (subject.priority === "low") {
-            score += 1;
-        }
-
-
-        if (subject.difficulty === "hard") {
-            score += 3;
-        }
-
-        if (subject.difficulty === "medium") {
-            score += 2;
-        }
-
-        if (subject.difficulty === "easy") {
-            score += 1;
-        }
-
+    function getFocusWeight(subject) {
 
         if (selectedFocus === "exam") {
-            score +=
-                subject.priority === "high"
-                    ? 3
-                    : 0;
+
+            if (subject.priority === "high") {
+                return 5;
+            }
+
+            if (subject.priority === "medium") {
+                return 2;
+            }
+
+            return 1;
         }
 
 
         if (selectedFocus === "weak") {
-            score +=
-                subject.difficulty === "hard"
-                    ? 3
-                    : 0;
+
+            if (subject.difficulty === "hard") {
+                return 5;
+            }
+
+            if (subject.difficulty === "medium") {
+                return 2;
+            }
+
+            return 1;
         }
 
 
-        return score;
+        /* Balanced */
+
+        return 1;
+
+    }
+
+
+    /* =========================================
+       BUILD SUBJECT POOL
+    ========================================== */
+
+    function buildSubjectPool(subjects) {
+
+        const pool = [];
+
+
+        subjects.forEach(subject => {
+
+            const weight =
+                getFocusWeight(subject);
+
+
+            for (
+                let i = 0;
+                i < weight;
+                i++
+            ) {
+
+                pool.push(subject);
+
+            }
+
+        });
+
+
+        return pool;
 
     }
 
@@ -461,30 +417,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const hours =
             Math.max(
-                Number(
-                    dailyHours.value
-                ) || 1,
+                Number(dailyHours.value) || 1,
                 1
             );
 
 
-        const sortedSubjects =
-            [...subjects].sort(
-                (a, b) =>
-                    getSubjectScore(b) -
-                    getSubjectScore(a)
-            );
-
-
-        const days =
-            7;
-
+        const days = 7;
 
         const minutesPerDay =
             hours * 60;
 
 
         generatedTasks = [];
+
+
+        /*
+           Create weighted subject pool.
+
+           Balanced:
+           Every subject appears equally.
+
+           Exam Focus:
+           High-priority subjects appear more often.
+
+           Weak Subjects:
+           Hard subjects appear more often.
+        */
+
+        const subjectPool =
+            buildSubjectPool(subjects);
 
 
         for (
@@ -514,36 +475,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 task++
             ) {
 
+                /*
+                   Rotate through the weighted pool
+                   so the focus mode affects the
+                   actual generated schedule.
+                */
+
+                const poolIndex =
+                    (
+                        day *
+                        taskCountForDay +
+                        task
+                    ) %
+                    subjectPool.length;
+
+
                 const subject =
-                    sortedSubjects[
-                        (day + task) %
-                        sortedSubjects.length
-                    ];
+                    subjectPool[poolIndex];
 
 
                 let duration = 45;
 
 
                 if (
-                    subject.difficulty ===
-                    "hard"
+                    subject.difficulty === "hard"
                 ) {
-                    duration = 60;
-                }
 
-                if (
-                    subject.difficulty ===
-                    "easy"
+                    duration = 60;
+
+                } else if (
+                    subject.difficulty === "easy"
                 ) {
+
                     duration = 30;
+
                 }
 
 
                 const taskObject = {
 
                     id:
-                        `${day}-${task}-${Date.now()}`
-                        ,
+                        `${day}-${task}-${Date.now()}-${Math.random()}`,
 
                     day,
 
@@ -557,13 +529,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
 
-                dailyTasks.push(
-                    taskObject
-                );
+                dailyTasks.push(taskObject);
 
-                generatedTasks.push(
-                    taskObject
-                );
+                generatedTasks.push(taskObject);
 
             }
 
@@ -576,6 +544,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         updateStats();
+
+
+        let modeMessage =
+            "Your schedule has been balanced across your subjects.";
+
+
+        if (selectedFocus === "exam") {
+
+            modeMessage =
+                "Exam Focus is prioritizing your high-priority subjects.";
+
+        }
+
+
+        if (selectedFocus === "weak") {
+
+            modeMessage =
+                "Weak Subjects mode is giving extra attention to difficult subjects.";
+
+        }
 
 
         aiMessage.innerHTML = `
@@ -591,8 +579,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </strong>
 
                 <p>
-                    Your schedule has been balanced
-                    around your priorities and study time.
+                    ${modeMessage}
                 </p>
 
             </div>
@@ -617,7 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       DAILY PLACEHOLDER DATA
+       DAILY TASK DATA
     ========================================== */
 
     function dailyTasksPlaceholder() {
@@ -670,9 +657,7 @@ document.addEventListener("DOMContentLoaded", () => {
             (tasks, dayIndex) => {
 
                 const dayCard =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
 
                 dayCard.className =
                     "day-card";
@@ -681,8 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const totalMinutes =
                     tasks.reduce(
                         (sum, task) =>
-                            sum +
-                            task.duration,
+                            sum + task.duration,
                         0
                     );
 
@@ -707,9 +691,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tasks.forEach(task => {
 
                     const taskElement =
-                        document.createElement(
-                            "div"
-                        );
+                        document.createElement("div");
 
                     taskElement.className =
                         "study-task";
@@ -768,15 +750,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             task.completed =
                                 !task.completed;
 
+
                             taskElement.classList.toggle(
                                 "completed",
                                 task.completed
                             );
 
+
                             check.textContent =
                                 task.completed
                                     ? "✓"
                                     : "";
+
 
                             updateProgress();
 
@@ -837,9 +822,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        setProgress(
-            percentage
-        );
+        setProgress(percentage);
 
 
         taskCount.textContent =
@@ -906,6 +889,7 @@ document.addEventListener("DOMContentLoaded", () => {
         () => {
 
             generatedTasks = [];
+
 
             planContainer.innerHTML = `
 
@@ -1017,7 +1001,8 @@ document.addEventListener("DOMContentLoaded", () => {
     timerStart.addEventListener(
         "click",
         () => {
-if (timerInterval) {
+
+            if (timerInterval) {
 
                 clearInterval(
                     timerInterval
@@ -1041,9 +1026,7 @@ if (timerInterval) {
                 setInterval(
                     () => {
 
-                        if (
-                            timerSeconds <= 0
-                        ) {
+                        if (timerSeconds <= 0) {
 
                             clearInterval(
                                 timerInterval
@@ -1104,9 +1087,7 @@ if (timerInterval) {
     function escapeHTML(value) {
 
         const div =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         div.textContent =
             value;
@@ -1135,4 +1116,3 @@ if (timerInterval) {
     updateStats();
 
 });
-            
