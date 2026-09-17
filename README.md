@@ -3,6 +3,10 @@
 > Plan smarter. Study better.
 > AI-powered study planner for organizing subjects, exam dates, study hours, priorities, and productivity.
 
+# AI Study Planner
+
+A smart and responsive study-planning web application designed to help students organize their studies and manage their productivity.
+
 StudyPilot is a modern, responsive AI-style study planning web application designed to help students organize their study time, prioritize subjects, and build a structured weekly study schedule.
 
 The application combines a clean dashboard interface with smart JavaScript-based planning logic to create a practical study experience without requiring external libraries or a backend.
@@ -120,6 +124,7 @@ The interface automatically adapts to smaller screens for a comfortable mobile e
 - HTML5
 - CSS3
 - Vanilla JavaScript
+- local storage 
 
 ### Concepts Used
 
@@ -138,6 +143,7 @@ No frameworks or external libraries are required.
 ---
 
 ## 📂 Project Structure
+This project was designed and developed by Luma X Dev as a frontend web application
 
 ```text
 ai-study-planner/
