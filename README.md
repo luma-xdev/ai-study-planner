@@ -1,6 +1,7 @@
 # 🧠 AI Study Planner — StudyPilot
 
 > Plan smarter. Study better.
+> AI-powered study planner for organizing subjects, exam dates, study hours, priorities, and productivity.
 
 StudyPilot is a modern, responsive AI-style study planning web application designed to help students organize their study time, prioritize subjects, and build a structured weekly study schedule.
 
